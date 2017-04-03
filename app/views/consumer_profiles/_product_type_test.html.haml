@@ -1,0 +1,19 @@
+- if info === :product_type_natural_medicines
+
+- elsif info === :product_type_feminine_hygiene
+
+  .row
+    .col-md-12
+    - ConsumerProfile.product_type_feminine_hygiene_boolean.each do |product_type|
+      = f.label product_type
+      = f.input product_type, as: :radio_buttons, label: false
+
+    - ConsumerProfile.send(info).each do |product_type|
+      = f.label product_type
+      = f.input product_type, as: :radio_buttons, label: false
+- else
+  .row{class: "#{info}"}
+    .col-md-12
+      - ConsumerProfile.send(info).each do |product_type|
+        = f.label product_type
+        = f.input product_type, as: :radio_buttons, label: false

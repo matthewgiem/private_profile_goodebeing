@@ -1,0 +1,333 @@
+%h1 Consumer Profile!
+
+= simple_form_for @consumer_profile do |f|
+  %h2 Step 1 - Put label for first questions here
+  = f.label :question1, label: "For the most customized experience, be thorough and try not to select conflicting answers.  Set realistic expectations.  We have a limited pool of products to choose from each month to customize your box.  We look at profile data all the time in sourcing, but we need members to be open to trying new things too!"
+  %br
+  = f.input :question1
+  %br
+  = f.label :question2, label: "Keep in mind, this is a \"trial and discovery\" box.  We can't ship an \"all makeup\" box and some product categories are unavoidable.  Please be sure to choose at least 5 product categories to receive in addition to Facial Care, which is an automatically included category (ie: Haircare, Makeup, Bath & Shower, etc) to receive and within those, choose several product types.  If you REALLY don't want to receive it (other than facial care), leave it unchecked.  Facial Care is the one category members can't opt out of."
+  %br
+  = f.input :question2
+  %br
+  = f.label :question3, label: "The regular box only costs $21.95 a month (multi-month plans are less per box), the little Goodbeing option $5.95.  Box values will always exceed $35 though on average across several months, total product value will be higher. Product sizes may vary widely month to month AND member to member because we customize.  The service is about brand & product discovery, try new and healthier options, and customizing to the greatest extend possible.  It's NOT about a \"deal\", although, it IS a great deal - prescreened products, customized to you, shipped to your door each month, so you can try before you buy. Please set your expectations accordingly."
+  %br
+  = f.input :question3
+  %br
+  = f.label :question4, label: "If the summary at the end does not seem like \"you\", go back and make changes."
+  %br
+  = f.input :question4
+  %br
+  = f.label :question5, label: "You can always update your profile, but allow 30 days for selection change to take effect so we can source based on your changes."
+  %br
+  = f.input :question5
+  %br
+  = f.label :question6, label: "With makeup, especially foundations, concealers, BB creams and the likes, it's tough to match skin tone.  Please use your samples to test out coverage, texture and compatibility where the color is not a perfect match and use it to narrow down your color options where it performs well for you otherwise."
+  %br
+  = f.input :question6
+  %br
+  = f.label :question7, label: "If you receive a product that is not a fit for you, find someone else who might enjoy it.  Help a friend discover healthier beauty & natural wellness with a friend!  They will thank you :)"
+  %br
+  = f.input :question7
+  %br
+  %h2 Step 2 - Let’s start with some basic information
+  %hr
+
+  .row
+    .col-12
+      %h3 need to make sure that they know that they cant fill out the form with out choosing one of these? unless we want to solve this differently
+      = f.label :box_type, label: "what is your box type"
+      = f.input :box_type, as: :radio_buttons, label: false
+    .col-3
+      %h2 Beauty Box
+      %p  The Standard Goodbeing Box will contain 4 to 5 items a month, in varying sizes, may contain 1 full size item along with travel, deluxe and regular sample size products. A Little Goodbeing will contain 2 sample size items a month, which may be sachets + a small jube, clamshells, small jars, vials and the like.  Both may include basic + speciatly skincare, haircare, makeup, bath & bodycare, fragrances, nail color and/or care, according to the prefrences you select.  The Beauty option will not contain general personal hygiene, lifestyle or wellness products.
+
+      %h2 Wellness Box
+      %p  The Standard Goodbeing Box will contain 4 to 5 items a month, in varying sizes, may contain 1 full size item along with travel, deluxe and regular sample size products. A Little Goodbeing will contain 2 sample size items a month, which may be sachets + a small jube, clamshells, small jars, vials and the like.  Both may include supplements, super foods,  non-toxic living products, general hygiene and basic personal care products and lifestyle goods, according to the prefrences you select.  The Beauty option will not include specialty beauty products, makeup, fragrances, beauty accessories or nail care/color.
+
+      %h2 Beauty and Wellness Box
+      %p  The Standard box will contain 4 to 5 items a month, in varying sizes, may contain 1 full size item along with travel, deluxe and regular sample size products. A Little Goodbeing will contain 2 sample size items a month, which may be sachets + a small jube, clamshells, small jars, vials and the like.  The Beauty + Wellness Box may contain a combination of products from both selections listed above, including:
+
+  %h1 make new data point for who the box is for? what should we do about the age bracket bellow?
+  .row
+    .col-12
+
+      = f.label :age_range, label: "Please tell us your age range"
+      = f.input :age_range, as: :radio_buttons, label: false
+
+  .row
+    .col-6
+      = f.label :pregnant, label: "Are you expecting a child?"
+      = f.input :pregnant, as: :radio_buttons, label: false
+      %p while we screen everything for unhealthy ingredients, there are still a few normally safe ingredients that we do not recommend for expecting mothers
+
+    .col-6
+      = f.input :birthday,  label: "When's your birthday?", start_year: Time.now.year - 100, end_year: Time.now.year - 18, order: [:day, :month], :input_html => {:class => 'form-control'}
+      %p  why? so we can send you Happy Birthday wishes
+
+  = f.label :vegan, label: "Do you have a vegan or vegetarian preference for products?"
+  = f.input :vegan, as: :radio_buttons, label: false
+
+  = f.label :product_quality, label: "Sample size & brand/product types"
+  = f.input :product_quality, as: :radio_buttons, label: false
+
+  %h2 Step 3 - Product Types
+  %h4 in sharing your interests and needs, keep the following in mind:
+
+  %ol
+    %li
+      Interest level = None.  You will not receive these items.
+    %li
+      Interest level = Low.  You may receive this items occasionally.
+    %li
+      Interest level = Some.  You may receive these items somewhat often.
+    %li
+      Interest level = Very.  You may receive these items regularly.
+
+
+  %hr
+
+  .row.facial_care
+    .col-md-12
+    .talbe-input-label Tell us how interested you are in the following products
+    = f.label :product_type_facial_care
+    = f.input :product_type_facial_care, as: :radio_buttons, label: false
+    %hr
+    = render 'product_type_test', :info => :product_type_facial_care, :f => f
+
+  .row.products
+    .col-md-12
+    %hr
+    = f.error :product_type
+    - ConsumerProfile.product_type.each do |product|
+      .div{id: "#{product}"}
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+        %hr
+        .product
+          = render 'product_type_test', :info => product, :f => f
+
+  %h2 check if simple_profile is being saved as a boolean operator and not a string
+  = f.label :simple_profile, label: "How customized would you like your box to be?"
+  = f.input :simple_profile, as: :radio_buttons, label: false
+
+  #simple
+    %h2 change data type for skin types and skin care goes primary and secondary
+    .row.skin_type
+      .col_md_12
+      = f.label :skin_type, label: "what is your skin type"
+      = f.input :skin_type, as: :radio_buttons, label: false
+
+
+    .row.primary_skin_care_goal
+      .col-md-12
+      = f.label :primary_skin_care_goal, label: "What is your primary skincare goal?"
+      = f.input :primary_skin_care_goal, as: :radio_buttons, label: false
+
+    %h1 Can the primary and secondary goal be the same?
+
+    .row.secondary_skin_care_goal
+      .col-md-12
+      = f.label :secondary_skin_care_goal, label: "What is your secondary skincare goal?"
+      = f.input :secondary_skin_care_goal, as: :radio_buttons, label: false
+
+    .row.skin_care
+      .col-md-12
+      .table-input-label How important are these skin care concerns to you?
+      %p  You can come back and change this from time to time to reflect more current needs and changes. We will source as fast as we can, but please allow 30-60 days for you box selection to reflect profile changes.
+      %br
+      - ConsumerProfile.skin_concerns.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.facial_care
+      .col-md-12
+      .table-input-label Please let us know how much of a concern these issues are for you
+      %br
+      - ConsumerProfile.facial_care.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    = f.label :skin_tone, label: "What is your closest skin tone, without a tan?"
+    = f.input :skin_tone, as: :radio_buttons, label: false
+
+    .row.makeup_look
+      .col-md-12
+      = f.label :makeup_look, label: "What is your preferred makeup look?"
+      = f.input :makeup_look, as: :radio_buttons, label: false
+
+    .row.lips_color
+      .col-md-12
+      .table-input-label What are your lip color preference?
+      %br
+      - ConsumerProfile.lips_color.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.eye_color
+      .col-md-12
+      .table-input-label What are your eye color preference?
+      %br
+      - ConsumerProfile.eye_color.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.nail_color
+      .col-md-12
+      .table-input-label What are your nail color preference?
+      %br
+      - ConsumerProfile.nail_color.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.eyebrow_color
+      .col-md-12
+      .table-input-label What are your eyebrow color preference?
+      %br
+      - ConsumerProfile.eyebrow_color.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.eyelash_color
+      .col-md-12
+      .table-input-label What are your eyelash color preference?
+      %br
+      - ConsumerProfile.eyelash_color.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.shimmer
+      .col-md-12
+      .table-input-label What are your shimmer preference?
+      %br
+      - ConsumerProfile.shimmer.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.hair_type
+      .col-md-12
+      = f.label :hair_type, label: "Which applies to your hair?"
+      = f.input :hair_type, as: :radio_buttons, label: false
+
+    .row.hair_thickness
+      .col-md-12
+      = f.label :hair_thickness, label: "How thick is your hair?"
+      = f.input :hair_thickness, as: :radio_buttons, label: false
+
+    .row.hair_texture
+      .col-md-12
+      = f.label :hair_texture, label: "What texture is your hair?"
+      = f.input :hair_texture, as: :radio_buttons, label: false
+
+    .row.hair_color_string
+      .col-md-12
+      = f.label :hair_color_string, label: "What is your hair color? (As you wear it, dyed or natural)"
+      = f.input :hair_color_string, as: :radio_buttons, label: false
+
+
+      %img(src="assets/brownHairSample.jpeg")
+      =#image_tag "brownHairSample.jpeg"
+      %br
+
+      = f.label :has_light_blonde_hair
+      = f.input :has_light_blonde_hair, as: :radio_buttons, label: false
+
+    .row.haircare_products
+      .col-md-12
+      .table-input-label What are your haircare preference?
+      %br
+      - ConsumerProfile.haircare_products.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.fragrance
+      .col-md-12
+      .table-input-label What are your fragrance preference?
+      %br
+      - ConsumerProfile.fragrance.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.body_concerns
+      .col-md-12
+      .table-input-label What are your body concerns?
+      %br
+      - ConsumerProfile.body_concerns.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+    .row.health_concerns
+      .col-md-12
+      .table-input-label What are your health concerns?
+      %br
+      - ConsumerProfile.health_concerns.each do |product|
+        = f.label product
+        = f.input product, as: :radio_buttons, label: false
+
+      .row.is_dietary_restricted
+        .col-md-12
+        .table-input-label What are your allergies, Dietary (list of options to check) Note - We DO NOT SCREEN TOPICAL PRODUCTS products for these ingredients - only ingestible products - and there is it NOT GUARANTEED that any product will be free of these ingredients due to labeling mistakes, cross contamination and the like. initial here to indicate that you understand these limitations accept these terms?
+        %h2 how should I program this?
+        %br
+        - ConsumerProfile.is_dietary_restricted.each do |product|
+          = f.label product
+          = f.input product, as: :radio_buttons, label: false
+
+      .row.health_concerns_hair_health
+        .col-md-12
+        .table-input-label What are your hair health concerns?
+        %br
+        - ConsumerProfile.health_concerns_hair_health.each do |product|
+          = f.label product
+          = f.input product, as: :radio_buttons, label: false
+
+      .row.health_concerns_skin_health
+        .col-md-12
+        .table-input-label What are your skin health concerns?
+        %br
+        - ConsumerProfile.health_concerns_skin_health.each do |product|
+          = f.label product
+          = f.input product, as: :radio_buttons, label: false
+
+      %h2 GENERAL DEMOGRAPHICS (optional but encouraged)
+
+      %h3 You're done! WE'd LOVE to know a little more about you to help us source products, content to share and to build community, but the following questions are 100% optional. thanks in advance for taking part!
+
+      .row.buy_products
+        .col-md-12
+        .table-input-label Where do you prefer to shop for beauty products?
+        %br
+        - ConsumerProfile.buy_products.each do |product|
+          = f.label product
+          = f.input product, as: :radio_buttons, label: false
+
+      .row.buy
+        .col-md-12
+        .table-input-label How often do you purchase the following items?
+        %br
+        - ConsumerProfile.buy.each do |product|
+          = f.label product
+          = f.input product, as: :radio_buttons, label: false
+
+      %h2 add links for facebook, Instagram, ... ect
+
+      .row
+        .col-md-12
+          %h3 tell us your username so we can connect to you over social media
+          = f.input :facebook, label: "facebook "
+          = f.input :instagram, label: "Instagram "
+          = f.input :pinterest, label: "Pinterest "
+          = f.input :twitter, label: "Twitter "
+          = f.input :youtube, label: "YouTube "
+          = f.input :vimeo, label: "Vimeo "
+          = f.input :blog, label: "Blog "
+
+      .row.hobby
+        .col-md-12
+        .table-input-label What are you interests and hobbies?
+        %br
+        - ConsumerProfile.hobby.each do |product|
+          = f.label product
+          = f.input product, as: :radio_buttons, label: false
+
+  = f.submit "submit form", :class => 'btn btn-large btn-primary', 'data-no-turbolink' => true
