@@ -11,7 +11,7 @@ group :development do
   gem 'sqlite3'
 end
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+# gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -35,7 +35,17 @@ gem 'spring',        group: :development
 gem 'enumerize'
 gem "haml"
 gem 'simple_form', :git => 'https://github.com/plataformatec/simple_form.git'
+gem 'bootstrap-wysihtml5-rails'
+gem 'chosen-rails'
+gem 'bootstrap-slider-rails'
+gem 'jquery-ui-rails'
+gem "the_sortable_tree", "~> 2.6.1"
+gem 'data-confirm-modal'
+gem "bootstrap-switch-rails"
 
+gem 'bootstrap-sass', '~> 3.0.3.0'
+gem 'sass-rails', '~> 4.0.0'
+# gem 'sass-rails', '>= 3.2'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
